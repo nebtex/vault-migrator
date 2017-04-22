@@ -28,6 +28,9 @@ create a `config.json` file with this structure
     }
 }
 ```
+
+where `to`, is the source backend, and `from` is the destination
+
 ## Examples:
 
 
@@ -61,7 +64,7 @@ create a `config.json` file with this structure
 
 full list of storage backends and configuration options: [Vault Storage Backends](https://www.vaultproject.io/docs/configuration/storage/index.html)
 
-`schedule` is optional for more documentation please check [robfig/cron](https://godoc.org/github.com/robfig/cron)
+`schedule` is optional for more documentation about is format please check [robfig/cron](https://godoc.org/github.com/robfig/cron)
 
 ## Binaries
 
@@ -89,6 +92,12 @@ unzip and make the vault-migrator binary executable and move it to your PATH
 
 full list of downloads for other platforms [here][release]
 
+#### Usage
+
+```shell 
+vault-migrator --config ${your_config_path}
+```
+
 ## Docker
 
 [![](https://images.microbadger.com/badges/image/nebtex/vault-migrator.svg)](https://microbadger.com/images/nebtex/vault-migrator "Get your own image badge on microbadger.com")
@@ -99,6 +108,11 @@ full list of downloads for other platforms [here][release]
 ```shell 
 docker pull nebtex/vault-migrator:$(curl -s https://raw.githubusercontent.com/nebtex/vault-migrator/master/stable.txt)
 ``` 
+#### Usage
+
+```shell 
+docker run -v ${your_config}:/etc/vault-migrator.yml nebtex/vault-migrator
+```
 
 ## Licensing
 

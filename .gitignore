@@ -25,3 +25,4 @@ _testmain.go
 config.json
 vendor/
 .idea/
+vault-migrator
