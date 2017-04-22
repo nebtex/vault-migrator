@@ -78,19 +78,19 @@ full list of storage backends and configuration options: [Vault Storage Backends
 #### OS X 
 
 ```shell
-curl -LO https://github.com/nebtex/vault-migrator/releases/download/$(curl -s https://raw.githubusercontent.com/nebtex/vault-migrator/master/stable.txt)/menshend_darwin_amd64.zip
+curl -LO https://github.com/nebtex/vault-migrator/releases/download/$(curl -s https://raw.githubusercontent.com/nebtex/vault-migrator/master/stable.txt)/vault-migrator_darwin_amd64.zip
 ```
 
 #### Linux
 
 ```shell
-curl -LO https://github.com/nebtex/vault-migrator/releases/download/$(curl -s https://raw.githubusercontent.com/nebtex/vault-migrator/master/stable.txt)/menshend_linux_amd64.zip
+curl -LO https://github.com/nebtex/vault-migrator/releases/download/$(curl -s https://raw.githubusercontent.com/nebtex/vault-migrator/master/stable.txt)/vault-migrator_linux_amd64.zip
 ```
 
 #### Windows
 
 ```shell 
-curl -LO https://github.com/nebtex/vault-migrator/releases/download/$(curl -s https://raw.githubusercontent.com/nebtex/vault-migrator/master/stable.txt)/menshend_windows_amd64.zip
+curl -LO https://github.com/nebtex/vault-migrator/releases/download/$(curl -s https://raw.githubusercontent.com/nebtex/vault-migrator/master/stable.txt)/vault-migrator_windows_amd64.zip
 ```
 
 unzip and make the vault-migrator binary executable and move it to your PATH 
