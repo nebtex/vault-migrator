@@ -124,5 +124,5 @@ To contribute to this project, see [CONTRIBUTING](CONTRIBUTING).
 
 ## Licensing
 
-*vault-migrator* is licensed under the MIT License. See [LICENSE](LICENSE) for the full license text.
+*vault-migrator* is licensed under the APACHE License v2. See [LICENSE](LICENSE) for the full license text.
 
