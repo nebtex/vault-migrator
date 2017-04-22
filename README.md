@@ -35,7 +35,7 @@ create a `config.json` file with this structure
 }
 ```
 
-where `to`, is the source backend, and `from` is the destination
+where `from`, is the source backend, and `to`  is the destination
 
 ## Examples:
 
