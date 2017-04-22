@@ -71,7 +71,7 @@ where `from`, is the source backend, and `to`  is the destination
 
 full list of storage backends and configuration options: [Vault Storage Backends](https://www.vaultproject.io/docs/configuration/storage/index.html)
 
-`schedule` is optional for more documentation about is format please check [robfig/cron](https://godoc.org/github.com/robfig/cron)
+`schedule` is optional if is not defined the command will run only once, for more documentation about is format please check [robfig/cron](https://godoc.org/github.com/robfig/cron)
 
 ## Binaries
 
