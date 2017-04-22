@@ -1,0 +1,21 @@
+{
+  "to": {
+    "name": "consul",
+    "config": {
+      "address": "127.0.0.7:8500",
+      "path": "vault",
+      "token": "xxxx-xxxx-xxxx-xxxx-xxxxxxxxx"
+    }
+  },
+  "from": {
+    "name": "dynamodb",
+    "config": {
+      "ha_enabled": true,
+      "table": "vault",
+      "write_capacity": 1,
+      "access_key": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "secret_key": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    }
+  },
+  "schedule": "@daily"
+}

@@ -1,6 +1,6 @@
 FROM alpine:3.5
 MAINTAINER Cristian Lozano <criscalovis@gmail.com> (@criloz)
-ENV VAULT_MIGRATOR_CONFIG_FILE /etc/vault-migrator.yml
+ENV VAULT_MIGRATOR_CONFIG_FILE /etc/vault-migrator.json
 # Create a  user and group first so the IDs get set the same way, even as
 # the rest of this may change over time.
 RUN addgroup vault-migrator && adduser -S -G vault-migrator vault-migrator
@@ -19,7 +19,7 @@ ADD dist/vault-migrator_linux_amd64 /bin/vault-migrator
 RUN chmod +x /bin/vault-migrator
 
 # copy vault-migrator config
-ADD vault-migrator.yml /etc/vault-migrator.yml
+ADD vault-migrator.json /etc/vault-migrator.json
 ADD entrypoint.sh /bin/entrypoint.sh
 RUN chmod +x /bin/entrypoint.sh
 

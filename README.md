@@ -116,7 +116,7 @@ docker pull nebtex/vault-migrator:$(curl -s https://raw.githubusercontent.com/ne
 #### Usage
 
 ```shell 
-docker run -v ${your_config}:/etc/vault-migrator.yml nebtex/vault-migrator
+docker run -v ${your_config}:/etc/vault-migrator.json nebtex/vault-migrator
 ```
 ## Contribution
 
