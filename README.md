@@ -2,6 +2,7 @@
 
 [release]: https://github.com/nebtex/vault-migrator/releases
 
+[![GitHub release](http://img.shields.io/github/release/nebtex/vault-migrator.svg?style=flat-square)][release]
 [![Go Report Card](https://goreportcard.com/badge/github.com/nebtex/vault-migrator)](https://goreportcard.com/report/github.com/nebtex/vault-migrator)
 
 migrate or backup vault data between two physical backends. in one operation or in a cron job.
