@@ -19,12 +19,12 @@ create a `config.json` file with this structure
 ```json
 {
   "to": {
-    "name": [[Backend Name]],
-    "config": [[Backend Config]],
+    "name": "[[Backend Name]]",
+    "config": "[[Backend Config]]"
   },
     "from": {
-        "name": [[Backend Name]],
-        "config": {[[Backend Config]],
+        "name": "[[Backend Name]]",
+        "config": "{[[Backend Config]]"
     }
 }
 ```
