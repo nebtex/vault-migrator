@@ -1,5 +1,11 @@
 image: cr.genos.nebtex.com/publicdev/golang:1.8
 
+cache:
+  key: "$CI_COMMIT_REF_NAME"
+  paths:
+  - vendor/
+  untracked: true
+
 before_script:
   - mkdir -p /go/src /go/bin /go/src/github.com/nebtex
   - export GOPATH=/go
