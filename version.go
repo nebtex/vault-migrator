@@ -1,3 +1,3 @@
 package main
 
-var Version = "latest"
+var version = "latest"
