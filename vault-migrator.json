@@ -10,9 +10,9 @@
   "from": {
     "name": "dynamodb",
     "config": {
-      "ha_enabled": true,
+      "ha_enabled": "true",
       "table": "vault",
-      "write_capacity": 1,
+      "write_capacity": "1",
       "access_key": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
       "secret_key": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
     }

@@ -11,6 +11,7 @@ import (
     "fmt"
     "strings"
     "github.com/robfig/cron"
+    "time"
 )
 
 //Backend is a supported storage backend by vault
@@ -127,7 +128,16 @@ func main() {
             return err
         }
         cr.Start()
-        return nil
+        //make initial migration
+        err = move(config)
+        if err != nil {
+            return err
+        }
+        for {
+            time.Sleep(time.Second * 60)
+            logrus.Info("Waiting the next schedule")
+    
+        }
         
     }
     err := app.Run(os.Args)

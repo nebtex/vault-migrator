@@ -39,6 +39,7 @@ where `to`, is the source backend, and `from` is the destination
 
 ## Examples:
 
+> remember only use strings in the backend config values!!!
 
 1. from dynamodb to consul
 
@@ -55,9 +56,9 @@ where `to`, is the source backend, and `from` is the destination
     "from": {
         "name": "dynamodb",
         "config": {
-          "ha_enabled": true,
+          "ha_enabled": "true",
           "table": "vault",
-          "write_capacity": 1,
+          "write_capacity": "1",
           "access_key": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
           "secret_key": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
         }
