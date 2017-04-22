@@ -87,7 +87,7 @@ func main() {
         Name: "config, c",
         Value: "",
         Usage: "config file",
-        EnvVar: "VAUL_MIGRATOR_CONFIG_FILE",
+        EnvVar: "VAULT_MIGRATOR_CONFIG_FILE",
     }}
     
     app.Action = func(c *cli.Context) error {

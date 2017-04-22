@@ -1,3 +1,3 @@
 package main
 
-var version = "latest"
+const version string = "latest"

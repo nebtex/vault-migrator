@@ -26,3 +26,4 @@ config.json
 vendor/
 .idea/
 vault-migrator
+dist/
