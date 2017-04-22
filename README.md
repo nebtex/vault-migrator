@@ -59,9 +59,9 @@ type Config struct {
 }
 ```
 
-full list of storage backends and configuration options: [Vault Storage Backend](https://www.vaultproject.io/docs/configuration/storage/index.html)
+> this will backup each 24 hours your data in dynamodb to a consul instance. 
 
-this will backup each 24 hours your data in dynamodb to a consul instance. 
+full list of storage backends and configuration options: [Vault Storage Backends](https://www.vaultproject.io/docs/configuration/storage/index.html)
 
 `schedule` is optional for more documentation please check [robfig/cron](https://godoc.org/github.com/robfig/cron)
 
