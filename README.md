@@ -17,17 +17,17 @@ create a `config.json` file with this structure
 package main
 
 type Backend struct {
-	Name   string `json:"name"`
-	Config map[string]string `json:"config"`
+    Name   string `json:"name"`
+    Config map[string]string `json:"config"`
 }
 
 type Config struct {
     //Source
     From     *Backend `json:"from"`
-	//Destination
-	To       *Backend `json:"to"`
-	//(optional) schedule a cron job
-	Schedule *string  `json:"schedule"`
+    //Destination
+    To       *Backend `json:"to"`
+    //(optional) schedule a cron job
+    Schedule *string  `json:"schedule"`
 }
 ```
 ## examples:
