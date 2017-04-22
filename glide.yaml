@@ -1,0 +1,6 @@
+package: github.com/nebtex/vault-migrate-dynamo-consul
+import:
+- package: github.com/hashicorp/vault
+  version: ^0.7.0
+- package: github.com/robfig/cron
+  version: ^1.0.0
