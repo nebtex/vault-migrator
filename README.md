@@ -1,4 +1,7 @@
 # vault migrator
+[release]: https://github.com/nebtex/vault-migrator/releases
+
+[![Go Report Card](https://goreportcard.com/badge/github.com/nebtex/vault-migrator)](https://goreportcard.com/report/github.com/nebtex/vault-migrator)
 
 migrate or backup vault data between two physical backends. in one operation or in a cron job.
 
@@ -13,21 +16,16 @@ tested with: `vault v0.7`, `consul`, `dynamodb`
 
 create a `config.json` file with this structure
 
-```go
-package main
-
-type Backend struct {
-    Name   string `json:"name"`
-    Config map[string]string `json:"config"`
-}
-
-type Config struct {
-    //Source
-    From     *Backend `json:"from"`
-    //Destination
-    To       *Backend `json:"to"`
-    //(optional) schedule a cron job
-    Schedule *string  `json:"schedule"`
+```json
+{
+  "to": {
+    "name": [[Backend Name]],
+    "config": [[Backend Config]],
+  },
+    "from": {
+        "name": [[Backend Name]],
+        "config": {[[Backend Config]],
+    }
 }
 ```
 ## Examples:
@@ -70,11 +68,13 @@ full list of storage backends and configuration options: [Vault Storage Backends
 [![Releases](https://img.shields.io/github/downloads/nebtex/vault-migrator/total.svg)][release]
 
 #### OS X 
+
 ```shell
 curl -LO https://github.com/nebtex/vault-migrator/releases/download/$(curl -s https://raw.githubusercontent.com/nebtex/vault-migrator/master/stable.txt)/menshend_darwin_amd64.zip
 ```
 
 #### Linux
+
 ```shell
 curl -LO https://github.com/nebtex/vault-migrator/releases/download/$(curl -s https://raw.githubusercontent.com/nebtex/vault-migrator/master/stable.txt)/menshend_linux_amd64.zip
 ```
