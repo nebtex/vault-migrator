@@ -44,6 +44,32 @@ build_tags:
     - export VAULT_MIGRATOR_RELEASE=${CI_COMMIT_TAG#$prefix}
     - make build
 
+set_stable_version:
+  stage: publish
+  allow_failure: true
+  only:
+    - tags
+  script:
+    - export prefix=v
+    - export VAULT_MIGRATOR_RELEASE=${CI_COMMIT_TAG#$prefix}
+    - mkdir -p $HOME/.ssh
+    - ssh-keyscan github.com >> ~/.ssh/known_hosts
+    - git config --global user.name "nebot"
+    - git config --global user.email devbot@nebtex.com
+    - echo -e "$nebot_key" > $HOME/.ssh/id_rsa
+    - echo -e "$nebot_gpg" > $HOME/private.key
+    - gpg --import $HOME/private.key
+    - git config --global user.signingkey $nebot_secret_key_gpg
+    - chmod 400 $HOME/.ssh/id_rsa
+    - cd /tmp
+    - git clone git@github.com:nebtex/vault-migrator.git
+    - cd vault-migrator
+    - rm -rf stable.txt
+    - printf $VAULT_MIGRATOR_RELEASE > stable.txt
+    - git add .
+    - git commit -S -m "set stable version to $VAULT_MIGRATOR_RELEASE, [skip ci]"
+    - git push origin master
+
 deploy:
   stage: deploy
   only:
