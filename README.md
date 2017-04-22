@@ -1,4 +1,5 @@
 # vault migrator
+
 [release]: https://github.com/nebtex/vault-migrator/releases
 
 [![Go Report Card](https://goreportcard.com/badge/github.com/nebtex/vault-migrator)](https://goreportcard.com/report/github.com/nebtex/vault-migrator)
@@ -11,6 +12,10 @@ tested with: `vault v0.7`, `consul`, `dynamodb`
 
 * **⇩** [Download](#binaries)
 * **⌧** [Docker](#docker) 
+
+# Warnings
+
+* Before you run this tool, make sure that you are not running vault in the destination backend
 
 # Usage
 
