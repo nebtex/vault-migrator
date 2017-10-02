@@ -2,7 +2,7 @@ package main
 
 import (
     log "github.com/mgutz/logxi/v1"
-    "github.com/Sirupsen/logrus"
+    "github.com/sirupsen/logrus"
     "github.com/hashicorp/vault/physical"
     "github.com/urfave/cli"
     "os"
@@ -54,7 +54,7 @@ func moveData(path string, from physical.Backend, to physical.Backend) error {
             continue
         }
         err = to.Put(entry)
-        
+
         if err != nil {
             return err
         }
@@ -90,7 +90,7 @@ func main() {
         Usage: "config file",
         EnvVar: "VAULT_MIGRATOR_CONFIG_FILE",
     }}
-    
+
     app.Action = func(c *cli.Context) error {
         configFile := c.String("config")
         configRaw, err := ioutil.ReadFile(configFile)
@@ -136,9 +136,9 @@ func main() {
         for {
             time.Sleep(time.Second * 60)
             logrus.Info("Waiting the next schedule")
-    
+
         }
-        
+
     }
     err := app.Run(os.Args)
     if err != nil {

@@ -137,7 +137,7 @@ imports:
   version: 1d7be4effb13d2d908342d349d71a284a7542693
   subpackages:
   - zk
-- name: github.com/Sirupsen/logrus
+- name: github.com/sirupsen/logrus
   version: ba1b36c82c5e05c4f912a88eab0dcd91a171688f
 - name: github.com/ugorji/go
   version: ded73eae5db7e7a0ef6f55aace87a2873c5d2b74
