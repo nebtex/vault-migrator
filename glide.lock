@@ -1,124 +1,25 @@
 hash: 4da94405db8c7f4eb48fa2e5f581e6c934deb46d402948283a2dfbe901642bb7
-updated: 2017-04-22T02:59:24.273268434-05:00
+updated: 2017-12-26T23:20:55.629388112-06:00
 imports:
-- name: cloud.google.com/go
-  version: 3b1ae45394a234c385be014e9a488f2bb6eef821
-  subpackages:
-  - compute/metadata
-  - internal
-  - storage
-- name: github.com/armon/go-metrics
-  version: 93f237eba9b0602f3e73710416558854a81d9337
-- name: github.com/armon/go-radix
-  version: 4239b77079c7b5d1243b7b4736304ce8ddb6f0f2
-- name: github.com/aws/aws-sdk-go
-  version: 695fe24acaf9afe80b0ce261d4637f42ba0b4c7d
-  subpackages:
-  - aws
-  - aws/awserr
-  - aws/awsutil
-  - aws/client
-  - aws/client/metadata
-  - aws/corehandlers
-  - aws/credentials
-  - aws/credentials/ec2rolecreds
-  - aws/credentials/endpointcreds
-  - aws/credentials/stscreds
-  - aws/defaults
-  - aws/ec2metadata
-  - aws/endpoints
-  - aws/request
-  - aws/session
-  - aws/signer/v4
-  - private/protocol
-  - private/protocol/json/jsonutil
-  - private/protocol/jsonrpc
-  - private/protocol/query
-  - private/protocol/query/queryutil
-  - private/protocol/rest
-  - private/protocol/restxml
-  - private/protocol/xml/xmlutil
-  - private/waiter
-  - service/dynamodb
-  - service/dynamodb/dynamodbattribute
-  - service/s3
-  - service/sts
-- name: github.com/Azure/azure-sdk-for-go
-  version: 4897648e310020dae650a89c31ff633284c13a24
-  subpackages:
-  - storage
-- name: github.com/coreos/etcd
-  version: fba87558a6fc26f2daaba4ceca1c5805af83fe0a
-  subpackages:
-  - auth/authpb
-  - client
-  - clientv3
-  - clientv3/concurrency
-  - etcdserver/api/v3rpc/rpctypes
-  - etcdserver/etcdserverpb
-  - mvcc/mvccpb
-  - pkg/pathutil
-  - pkg/tlsutil
-  - pkg/transport
-  - pkg/types
-  - version
-- name: github.com/coreos/go-semver
-  version: 568e959cd89871e61434c1143528d9162da89ef2
-  subpackages:
-  - semver
-- name: github.com/go-ini/ini
-  version: 98c45284d68a05a0e0a576de574bd975946ef9ad
-- name: github.com/go-sql-driver/mysql
-  version: 2e00b5cd70399450106cec6431c2e2ce3cae5034
 - name: github.com/golang/protobuf
   version: 4bd1920723d7b7c925de087aa32e2187708897f7
   subpackages:
-  - jsonpb
   - proto
-- name: github.com/grpc-ecosystem/grpc-gateway
-  version: 84398b94e188ee336f307779b57b3aa91af7063c
-  subpackages:
-  - runtime
-  - runtime/internal
-  - utilities
-- name: github.com/hashicorp/consul
-  version: 21f2d5ad0c02af6c4b32d8fd04f7c81e9b002d41
-  subpackages:
-  - api
-  - lib
 - name: github.com/hashicorp/errwrap
   version: 7554cd9344cec97297fa6649b055a8c98c2a1e55
-- name: github.com/hashicorp/go-cleanhttp
-  version: 3573b8b52aa7b37b9358d966a898feb387f62437
+- name: github.com/hashicorp/go-immutable-radix
+  version: 8aac2701530899b64bdea735a1de8da899815220
 - name: github.com/hashicorp/go-multierror
   version: ed905158d87462226a13fe39ddf685ea65f1c11f
-- name: github.com/hashicorp/go-uuid
-  version: 64130c7a86d732268a38cb04cfbaf0cc987fda98
 - name: github.com/hashicorp/golang-lru
   version: 0a025b7e63adc15a622f29b0b2c4c3848243bbf6
   subpackages:
   - simplelru
-- name: github.com/hashicorp/serf
-  version: 19f2c401e122352c047a84d6584dd51e2fb8fcc4
-  subpackages:
-  - coordinate
 - name: github.com/hashicorp/vault
-  version: 614deacfca3f3b7162bbf30a36d6fc7362cd47f0
+  version: 87b6919dea55da61d7cd444b2442cabb8ede8ab1
   subpackages:
-  - helper/awsutil
-  - helper/compressutil
-  - helper/consts
-  - helper/jsonutil
   - helper/locksutil
-  - helper/strutil
-  - helper/tlsutil
   - physical
-- name: github.com/jmespath/go-jmespath
-  version: bd40a432e4c76585ef6b72d3fd96fb9b6dc7b68d
-- name: github.com/lib/pq
-  version: 472a0745531a17dbac346e828b4c60e73ddff30c
-  subpackages:
-  - oid
 - name: github.com/mattn/go-colorable
   version: a392f450ea64cee2b268dfaacdc2502b50a22b18
 - name: github.com/mattn/go-isatty
@@ -129,80 +30,14 @@ imports:
   version: aebf8a7d67ab4625e0fd4a665766fef9a709161b
   subpackages:
   - v1
-- name: github.com/ncw/swift
-  version: 8e9b10220613abdbc2896808ee6b43e411a4fa6c
 - name: github.com/robfig/cron
   version: b024fc5ea0e34bc3f83d9941c8d60b0622bfaca4
-- name: github.com/samuel/go-zookeeper
-  version: 1d7be4effb13d2d908342d349d71a284a7542693
-  subpackages:
-  - zk
 - name: github.com/sirupsen/logrus
   version: ba1b36c82c5e05c4f912a88eab0dcd91a171688f
-- name: github.com/ugorji/go
-  version: ded73eae5db7e7a0ef6f55aace87a2873c5d2b74
-  subpackages:
-  - codec
 - name: github.com/urfave/cli
   version: 0bdeddeeb0f650497d603c4ad7b20cfe685682f6
-- name: golang.org/x/net
-  version: f2499483f923065a842d38eb4c7f1927e6fc6e6d
-  subpackages:
-  - context
-  - context/ctxhttp
-  - http2
-  - http2/hpack
-  - idna
-  - internal/timeseries
-  - lex/httplex
-  - trace
-- name: golang.org/x/oauth2
-  version: 3c3a985cb79f52a3190fbc056984415ca6763d01
-  subpackages:
-  - google
-  - internal
-  - jws
-  - jwt
 - name: golang.org/x/sys
   version: 99f16d856c9836c42d24e7ab64ea72916925fa97
   subpackages:
   - unix
-- name: google.golang.org/api
-  version: cbeb0ff89adddeef6a3287fa481dcca2b596ed36
-  subpackages:
-  - gensupport
-  - googleapi
-  - googleapi/internal/uritemplates
-  - googleapi/transport
-  - internal
-  - iterator
-  - option
-  - storage/v1
-  - transport
-- name: google.golang.org/appengine
-  version: 4f7eeb5305a4ba1966344836ba4af9996b7b4e05
-  subpackages:
-  - internal
-  - internal/app_identity
-  - internal/base
-  - internal/datastore
-  - internal/log
-  - internal/modules
-  - internal/remote_api
-  - internal/socket
-  - internal/urlfetch
-  - socket
-  - urlfetch
-- name: google.golang.org/grpc
-  version: 777daa17ff9b5daef1cfdf915088a2ada3332bf0
-  subpackages:
-  - codes
-  - credentials
-  - credentials/oauth
-  - grpclog
-  - internal
-  - metadata
-  - naming
-  - peer
-  - transport
 testImports: []
