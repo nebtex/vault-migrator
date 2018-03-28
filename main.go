@@ -15,6 +15,7 @@ import (
 	"github.com/robfig/cron"
 	"github.com/sirupsen/logrus"
 	"github.com/urfave/cli"
+    "sync"
 )
 
 var backendFactories map[string]physical.Factory
@@ -52,51 +53,78 @@ type Backend struct {
 
 //Config config.json structure
 type Config struct {
-	//Source
+	//Source Backend
 	From *Backend `json:"from"`
-	//Destination
+	//Destination Backend
 	To *Backend `json:"to"`
 	//Schedule (optional)
 	Schedule *string `json:"schedule"`
+    //Queue Size (optional)
+    QueueSize int `json:"queuesize"`
+    //Number of Workers (optional)
+    Workers int `json:"workers"`
 }
 
-func moveData(path string, from physical.Backend, to physical.Backend) error {
+// Recurse through 'from' backend and add keys to a queue for processing by worker processes
+func populateKeyQueue(path string, from physical.Backend, keyQueue chan string) error {
+    logrus.Infoln("listing keys : ", path)
 	keys, err := from.List(path)
 	if err != nil {
 		return err
 	}
 	for _, key := range keys {
-		logrus.Infoln("moving key: ", path+key)
 		if strings.HasSuffix(key, "/") {
-			err := moveData(path+key, from, to)
+            logrus.Infoln(": ", path+key)
+			err := populateKeyQueue(path+key, from, keyQueue)
 			if err != nil {
 				return err
 			}
 			continue
 		}
-		entry, err := from.Get(path + key)
-		if err != nil {
-			return err
-		}
-		if entry == nil {
-			continue
-		}
-		err = to.Put(entry)
-
-		if err != nil {
-			return err
-		}
-	}
-	if path == "" {
-		logrus.Info("all the keys have been moved ")
+        logrus.Infoln("adding key to queue: ", path+key)
+        keyQueue <- path+key
 	}
 	return nil
 }
 
+// Retrieve keys from the queue until the channel is closed
+func processKeyQueue(id int, from physical.Backend, to physical.Backend, keyQueue chan string, workerWaitGroup sync.WaitGroup) {
+    logrus.Infoln("Worker ", id, " starting")
+    for {
+        key, more := <-keyQueue
+        if more {
+            moveKey(key, from, to)
+        } else {
+            break
+        }
+    }
+    logrus.Infoln("Worker ", id, " done")
+    workerWaitGroup.Done()
+}
+
+func moveKey(key string, from physical.Backend, to physical.Backend) error {
+    logrus.Infoln("moving key: ", key)
+    entry, err := from.Get(key)
+    if err != nil {
+        return err
+    }
+
+    if entry != nil {
+        err = to.Put(entry)
+        if err != nil {
+            return err
+        }
+    } else {
+        logrus.Infoln("key not found: ", key)
+    }
+
+    return nil
+}
+
 func move(config *Config) error {
 	logger := log.New("vault-migrator")
-
-	from, err := newBackend(config.From.Name, logger, config.From.Config)
+    var keyQueue = make(chan string, config.QueueSize)
+	from, err := newBackend(config.From.Name, logger, config.From.Config, )
 	if err != nil {
 		return err
 	}
@@ -104,7 +132,20 @@ func move(config *Config) error {
 	if err != nil {
 		return err
 	}
-	return moveData("", from, to)
+    logrus.Infoln("Starting ", config.Workers, " workers...")
+    var workerWaitGroup sync.WaitGroup
+    workerWaitGroup.Add(config.Workers)
+    for id := 1; id <= config.Workers; id++ {
+        go processKeyQueue(id, from, to, keyQueue, workerWaitGroup)
+    }
+    logrus.Infoln("Starting to move keys")
+    populateKeyQueue("", from, keyQueue)
+    logrus.Infoln("All keys populated, notifying workers")
+    close(keyQueue)
+    logrus.Infoln("Waiting for workers to finish")
+    workerWaitGroup.Wait()
+    logrus.Infoln("All workers finished")
+    return nil
 }
 
 func main() {
@@ -137,7 +178,16 @@ func main() {
 		if config.To == nil {
 			return fmt.Errorf("%v", "Please define a destination (key: to)")
 		}
-		if config.Schedule == nil {
+        if config.QueueSize <= 0 {
+            // Default queue size to 10000
+            config.QueueSize = 10000
+        }
+        if config.Workers <= 0 {
+            // Default workers to 100
+            config.Workers = 100
+        }
+
+        if config.Schedule == nil {
 			return move(config)
 		}
 		cr := cron.New()
