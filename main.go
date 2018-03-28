@@ -183,8 +183,8 @@ func main() {
             config.QueueSize = 10000
         }
         if config.Workers <= 0 {
-            // Default workers to 100
-            config.Workers = 100
+            // Default workers to 10
+            config.Workers = 10
         }
 
         if config.Schedule == nil {
