@@ -90,6 +90,7 @@ func populateKeyQueue(path string, from physical.Backend, keyQueue chan string) 
 // Retrieve keys from the queue until the channel is closed
 func processKeyQueue(id int, from physical.Backend, to physical.Backend, keyQueue chan string, workerWaitGroup sync.WaitGroup) {
     logrus.Infoln("Worker ", id, " starting")
+    defer workerWaitGroup.Done()
     for {
         key, more := <-keyQueue
         if more {
@@ -99,7 +100,6 @@ func processKeyQueue(id int, from physical.Backend, to physical.Backend, keyQueu
         }
     }
     logrus.Infoln("Worker ", id, " done")
-    workerWaitGroup.Done()
 }
 
 func moveKey(key string, from physical.Backend, to physical.Backend) error {
@@ -183,8 +183,8 @@ func main() {
             config.QueueSize = 10000
         }
         if config.Workers <= 0 {
-            // Default workers to 10
-            config.Workers = 10
+            // Default workers to 1
+            config.Workers = 1
         }
 
         if config.Schedule == nil {
