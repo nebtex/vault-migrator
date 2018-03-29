@@ -63,7 +63,7 @@ type Config struct {
     QueueSize int `json:"queuesize"`
     //Number of Workers (optional)
     Workers int `json:"workers"`
-    //Debug logging (optional)
+    //Turn on debug logging (optional)
     Debug bool `json:"debug"`
 }
 
@@ -117,7 +117,7 @@ func moveKey(key string, from physical.Backend, to physical.Backend) error {
             return err
         }
     } else {
-        logrus.Infoln("key not found:", key)
+        logrus.Warnln("key not found:", key)
     }
 
     return nil
@@ -134,19 +134,19 @@ func move(config *Config) error {
     if err != nil {
         return err
     }
-    logrus.Infoln("Starting", config.Workers, "workers...")
+    logrus.Debugln("Starting", config.Workers, "workers...")
     var workerWaitGroup sync.WaitGroup
     workerWaitGroup.Add(config.Workers)
     for id := 1; id <= config.Workers; id++ {
         go processKeyQueue(id, from, to, keyQueue, &workerWaitGroup)
     }
-    logrus.Infoln("Starting to move keys...")
+    logrus.Infoln("Moving keys...")
     populateKeyQueue("", from, keyQueue)
-    logrus.Infoln("All keys added to queue...")
+    logrus.Debugln("All keys added to queue...")
     close(keyQueue)
-    logrus.Infoln("Waiting for workers to finish...")
+    logrus.Debugln("Waiting for workers to finish...")
     workerWaitGroup.Wait()
-    logrus.Infoln("All workers finished")
+    logrus.Infoln("all the keys have been moved")
     return nil
 }
 
