@@ -63,11 +63,13 @@ type Config struct {
     QueueSize int `json:"queuesize"`
     //Number of Workers (optional)
     Workers int `json:"workers"`
+    //Debug logging (optional)
+    Debug bool `json:"debug"`
 }
 
 // Recurse through 'from' backend and add keys to a queue for processing by worker processes
 func populateKeyQueue(path string, from physical.Backend, keyQueue chan string) error {
-    logrus.Infoln("listing keys : ", path)
+    logrus.Debugln("listing keys:", path)
     keys, err := from.List(path)
     if err != nil {
         return err
@@ -81,15 +83,15 @@ func populateKeyQueue(path string, from physical.Backend, keyQueue chan string) 
             }
             continue
         }
-        logrus.Infoln("adding key to queue: ", path+key)
+        logrus.Debugln("adding key to queue:", path+key)
         keyQueue <- path + key
     }
     return nil
 }
 
 // Retrieve keys from the queue until the channel is closed
-func processKeyQueue(id int, from physical.Backend, to physical.Backend, keyQueue chan string, workerWaitGroup sync.WaitGroup) {
-    logrus.Infoln("Worker ", id, " starting")
+func processKeyQueue(id int, from physical.Backend, to physical.Backend, keyQueue chan string, workerWaitGroup *sync.WaitGroup) {
+    logrus.Debugln("Worker", id, "starting")
     defer workerWaitGroup.Done()
     for {
         key, more := <-keyQueue
@@ -99,11 +101,11 @@ func processKeyQueue(id int, from physical.Backend, to physical.Backend, keyQueu
             break
         }
     }
-    logrus.Infoln("Worker ", id, " done")
+    logrus.Debugln("Worker", id, "done")
 }
 
 func moveKey(key string, from physical.Backend, to physical.Backend) error {
-    logrus.Infoln("moving key: ", key)
+    logrus.Infoln("moving key:", key)
     entry, err := from.Get(key)
     if err != nil {
         return err
@@ -115,7 +117,7 @@ func moveKey(key string, from physical.Backend, to physical.Backend) error {
             return err
         }
     } else {
-        logrus.Infoln("key not found: ", key)
+        logrus.Infoln("key not found:", key)
     }
 
     return nil
@@ -132,17 +134,17 @@ func move(config *Config) error {
     if err != nil {
         return err
     }
-    logrus.Infoln("Starting ", config.Workers, " workers...")
+    logrus.Infoln("Starting", config.Workers, "workers...")
     var workerWaitGroup sync.WaitGroup
     workerWaitGroup.Add(config.Workers)
     for id := 1; id <= config.Workers; id++ {
-        go processKeyQueue(id, from, to, keyQueue, workerWaitGroup)
+        go processKeyQueue(id, from, to, keyQueue, &workerWaitGroup)
     }
-    logrus.Infoln("Starting to move keys")
+    logrus.Infoln("Starting to move keys...")
     populateKeyQueue("", from, keyQueue)
-    logrus.Infoln("All keys populated, notifying workers")
+    logrus.Infoln("All keys added to queue...")
     close(keyQueue)
-    logrus.Infoln("Waiting for workers to finish")
+    logrus.Infoln("Waiting for workers to finish...")
     workerWaitGroup.Wait()
     logrus.Infoln("All workers finished")
     return nil
@@ -185,6 +187,9 @@ func main() {
         if config.Workers <= 0 {
             // Default workers to 1
             config.Workers = 1
+        }
+        if config.Debug {
+            logrus.SetLevel(logrus.DebugLevel)
         }
 
         if config.Schedule == nil {
