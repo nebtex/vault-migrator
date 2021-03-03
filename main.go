@@ -60,15 +60,15 @@ type Config struct {
 	Schedule *string `json:"schedule"`
 }
 
-func moveData(path string, from physical.Backend, to physical.Backend) error {
+func copyData(path string, from physical.Backend, to physical.Backend) error {
 	keys, err := from.List(path)
 	if err != nil {
 		return err
 	}
 	for _, key := range keys {
-		logrus.Infoln("moving key: ", path+key)
+		logrus.Infoln("copying key: ", path+key)
 		if strings.HasSuffix(key, "/") {
-			err := moveData(path+key, from, to)
+			err := copyData(path+key, from, to)
 			if err != nil {
 				return err
 			}
@@ -88,12 +88,12 @@ func moveData(path string, from physical.Backend, to physical.Backend) error {
 		}
 	}
 	if path == "" {
-		logrus.Info("all the keys have been moved ")
+		logrus.Info("all the keys have been copied ")
 	}
 	return nil
 }
 
-func move(config *Config) error {
+func copy(config *Config) error {
 	logger := log.New("vault-migrator")
 
 	from, err := newBackend(config.From.Name, logger, config.From.Config)
@@ -104,7 +104,7 @@ func move(config *Config) error {
 	if err != nil {
 		return err
 	}
-	return moveData("", from, to)
+	return copyData("", from, to)
 }
 
 func main() {
@@ -138,7 +138,7 @@ func main() {
 			return fmt.Errorf("%v", "Please define a destination (key: to)")
 		}
 		if config.Schedule == nil {
-			return move(config)
+			return copy(config)
 		}
 		cr := cron.New()
 		err = cr.AddFunc(*config.Schedule, func() {
@@ -148,7 +148,7 @@ func main() {
 					logrus.Errorln(err)
 				}
 			}()
-			err = move(config)
+			err = copy(config)
 			if err != nil {
 				logrus.Errorln(err)
 			}
@@ -158,7 +158,7 @@ func main() {
 		}
 		cr.Start()
 		//make initial migration
-		err = move(config)
+		err = copy(config)
 		if err != nil {
 			return err
 		}
